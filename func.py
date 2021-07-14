@@ -4,6 +4,7 @@ import json
 import hashlib
 
 import config
+import keyboa
 import requests
 
 
@@ -121,3 +122,9 @@ def check_for_existence(account):
 
 def get_hash():
     return json_reader(config.HASH_FILE_NAME)['hash']
+
+
+# (list)
+def keyboard_configur(*args):
+    return keyboa.Keyboa(args[0]).keyboard
+

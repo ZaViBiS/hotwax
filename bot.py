@@ -31,6 +31,20 @@ def test(message):
     bot.send_message(message.chat.id, func.get_hash())
 
 
+@bot.callback_query_handler(func = lambda call : True)
+def click_handler(call):
+    if call.data == config.ADD_USER:
+        if func.check_for_existence(call.message.text):
+                if func.add_new_user(call.message.text, call.message.chat.id) == False:
+                    bot.send_message(call.message.chat.id, config.USER_EXIST)
+                else:
+                    bot.send_message(call.message.chat.id, 
+                                    config.SUCCESSFUL_REGISTRATION)
+        else:
+            bot.send_message(call.message.chat.id, config.NO_ACCOUNT)
+
+
+
 @bot.message_handler(content_types=['text'])
 def processing_text_responses(message):
     # func.if_text_is_a_number(message.text)
@@ -38,14 +52,9 @@ def processing_text_responses(message):
         pass
         
     else:
-        if func.check_for_existence(message.text):
-            if func.add_new_user(message.text, message.chat.id) == False:
-                bot.send_message(message.chat.id, config.USER_EXIST)
-            else:
-                bot.send_message(message.chat.id, 
-                                config.SUCCESSFUL_REGISTRATION)
-        else:
-            bot.send_message(message.chat.id, config.NO_ACCOUNT)
-
+        bot.send_message(message.chat.id, 
+                         message.text, 
+                         reply_markup=func.keyboard_configur(config.ADD_USER))
+        
 
 bot.polling(True)

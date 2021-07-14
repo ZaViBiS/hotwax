@@ -1,5 +1,6 @@
 # --- То что видет пользователь --- #
 START_TEXT = 'text'
+ADD_USER = 'add'
 SUCCESSFUL_REGISTRATION = 'SUCCESSFUL REGISTRATION'
 FALSE_COMMAND = 'FALSE COMMAND'
 NO_ACCOUNT = 'no account'

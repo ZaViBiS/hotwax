@@ -23,3 +23,4 @@
 2021-07-14 20:10:05,439 DEBUG:https://api.telegram.org:443 "GET /bot1864177478:AAHH6o3rIQOp7SjAqnjbrblWUY2zJFWlhcA/getUpdates?offset=844025168&timeout=20 HTTP/1.1" 200 23
 2021-07-14 20:10:25,492 DEBUG:https://api.telegram.org:443 "GET /bot1864177478:AAHH6o3rIQOp7SjAqnjbrblWUY2zJFWlhcA/getUpdates?offset=844025168&timeout=20 HTTP/1.1" 200 23
 2021-07-14 20:10:45,564 DEBUG:https://api.telegram.org:443 "GET /bot1864177478:AAHH6o3rIQOp7SjAqnjbrblWUY2zJFWlhcA/getUpdates?offset=844025168&timeout=20 HTTP/1.1" 200 23
+2021-07-14 22:21:40,030 ERROR:A request to the Telegram API was unsuccessful. Error code: 400. Description: Bad Request: can't parse reply keyboard markup JSON object
