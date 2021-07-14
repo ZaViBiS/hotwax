@@ -7,6 +7,7 @@ NO_ACCOUNT = 'no account'
 USER_EXIST = 'USER EXIST'
 
 # --- Штуки бота --- #
+OLD_HASHES_FILE_NAME = 'data/old_hashes.json'
 USER_FILE_NAME = 'data/users.json'
 HASH_FILE_NAME = 'data/hash.json'
 LOG_FILE_NAME = 'data/log.txt'

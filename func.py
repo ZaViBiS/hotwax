@@ -1,6 +1,8 @@
 import io
 import os
 import json
+import time
+import random
 import hashlib
 
 import config
@@ -11,7 +13,7 @@ import requests
 def creates_a_hash_of_the_winning_number(num):
     salt = os.urandom(64).hex()
     data = f'{num} {salt}'
-    return hashlib.sha256(data.encode()).hexdigest()
+    return hashlib.sha256(data.encode()).hexdigest(), salt, num
 
 
 def add_new_user(user_wallet, user_id):
@@ -128,3 +130,15 @@ def get_hash():
 def keyboard_configur(*args):
     return keyboa.Keyboa(args[0]).keyboard
 
+
+# Обновления хеша
+def hash_update():
+    ran = random.randint(1, 10000)
+    hashh, salt, num = creates_a_hash_of_the_winning_number(ran)
+    # Сохранить старые хеши
+    old = json_reader(config.OLD_HASHES_FILE_NAME)
+    old[time.time()] = json_reader(config.HASH_FILE_NAME)
+    json_writer(old, config.OLD_HASHES_FILE_NAME)
+    # Записать новыйе значения 
+    data = {"num" : num, "salt" : salt, "hash" : hashh}
+    json_writer(data, config.HASH_FILE_NAME)
