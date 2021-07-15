@@ -207,3 +207,13 @@ def to_the_first_bet_that_comes_across(user_name, tx):
             return True
     else:
         return False
+
+
+# True добовляет 0.01 | False Обнуляет 
+def accounting_for_the_prize_fund(waht : bool):
+    how_much = json_reader(config.PRIZE_FUND)
+    if waht:
+        how_much[0] += 0.01
+    else:
+        how_much[0] = 0
+    json_writer(how_much, config.PRIZE_FUND)

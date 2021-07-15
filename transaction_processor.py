@@ -35,5 +35,6 @@ def tx_processor():
                                 for _ in range(10000):
                                     bet = random.randint(1, 10000)
                                     func.adding_rate(name, bet)
-                            
+                            # Добавить в призовой фонд
+                            func.accounting_for_the_prize_fund(True)
         time.sleep(360)
