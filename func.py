@@ -13,7 +13,7 @@ import keyboa
 def creates_a_hash_of_the_winning_number(num):    # Создает хеш
     salt = os.urandom(64).hex()
     data = f'{num} {salt}'
-    return hashlib.sha256(data.encode()).hexdigest(), salt, num
+    return hashlib.md5(data.encode()).hexdigest(), salt, num
 
 
 def add_new_user(user_wallet, user_id):    # Добовляет нового пользователя

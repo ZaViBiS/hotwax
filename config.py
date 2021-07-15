@@ -16,6 +16,7 @@ HASH_FILE_NAME = 'data/hash.json'
 LOG_FILE_NAME = 'data/log.txt'
 PRIZE_FUND = 'data/prize_fund.json'
 WINNERS_FILE_NAME = 'winners.json'
+DRAW_TIME = '10:00'
 
 # --- Урлы --- #
 INFO_POST_ACCOUNT = 'https://wax.greymass.com/v1/chain/get_account'

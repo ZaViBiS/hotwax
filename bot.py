@@ -4,13 +4,17 @@ import threading
 import person_data
 import func
 import config
+import lottary
 
 from telebot import TeleBot
 from transaction_processor import tx_processor
 
 # init
 bot = TeleBot(person_data.TOKEN)
-threading.Thread(target=tx_processor).start()
+# обработчик транзакций
+threading.Thread(target=tx_processor).start()   
+# Проводит розыгрыши
+threading.Thread(target=lottary.hold_draws_once_a_day).start()   
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s:%(message)s',
                     filename=config.LOG_FILE_NAME)
@@ -23,7 +27,7 @@ def start(message):
 
 @bot.message_handler(['test'])
 def test(message):
-    func.clearing_bets_after_playing()
+    func.hash_update()
 
 
 @bot.message_handler(['hash'])

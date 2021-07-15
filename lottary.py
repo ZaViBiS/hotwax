@@ -1,12 +1,14 @@
-import random
+import datetime
+import time
+import json
+import logging
 
 import func
 import config
 
 
 def decides_who_won():
-    win = random.randint(1, 10000)
-    print(win)
+    win = func.json_reader(config.HASH_FILE_NAME)['num']
     winners = winner(str(win))
     if winners:
         # призовой фонд / количесто учасноков
@@ -14,11 +16,13 @@ def decides_who_won():
         # выплата -5% и округление до 3 знаков после запятой
         payout = round(payout - ((payout / 100) * 5), 3)
         winners['how_much'] = payout
-        
+
         func.accounting_for_the_prize_fund(False)
         func.json_writer(winners, config.WINNERS_FILE_NAME)
     else:
         func.json_writer({}, config.WINNERS_FILE_NAME)
+    func.hash_update()
+    return winners
 
 
 def winner(win: str):
@@ -43,5 +47,17 @@ def what_is_the_prize_fund():
     return func.json_reader(config.PRIZE_FUND)[0]
 
 
+def hold_draws_once_a_day():
+    while True:
+        timen = datetime.datetime.now().strftime("%H:%M")
+        print(timen)
+        if timen == '10:00':
+            winners = decides_who_won()
+            logging.info('розыгрыш провден')
+            logging.info(json.dumps(winners))
+            time.sleep(1380) # 23 часа
+        time.sleep(1)
+
+
 if __name__ == '__main__':
-    decides_who_won()
+    hold_draws_once_a_day()
