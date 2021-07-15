@@ -157,3 +157,7 @@ def сheck_trx_id_for_presence_in_the_database(tx):
                 return True
     else:
         return False
+
+
+def view_memo(data):
+    return data['action_trace']['act']['data']['memo']

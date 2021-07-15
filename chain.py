@@ -11,9 +11,10 @@ def account_info(account):    # Получает информацию про а�
     return json.loads(respone)
 
 
-def get_the_last_transaction():
+def get_the_last_transaction():     # Получить 100 последних транзакций
     data = json.dumps({'account_name': "ygbni.wam",
                        'pos': -1,
                        'offset': -100})
-    return requests.post(config.GET_ACTIONS, data).text
+    res = requests.post(config.GET_ACTIONS, data).text
+    return json.loads(res)
 
