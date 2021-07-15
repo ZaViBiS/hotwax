@@ -10,7 +10,6 @@ import config
 import keyboa
 
 
-
 def creates_a_hash_of_the_winning_number(num):    # Создает хеш
     salt = os.urandom(64).hex()
     data = f'{num} {salt}'
@@ -136,3 +135,14 @@ def hash_update():    # Обновления хеша
     # Записать новыйе значения
     data = {"num": num, "salt": salt, "hash": hashh}
     json_writer(data, config.HASH_FILE_NAME)
+
+
+# Ищет транзакции с определенным пользователям
+def find_all_transactions_with_a_user(user, txs):
+    txs = json.loads(txs)
+    result = []
+    for x in txs['actions']:
+        data = x['action_trace']['act']['authorization'][0]['actor']
+        if data == user:
+            result.append(x['action_trace'])
+    return result

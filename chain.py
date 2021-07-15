@@ -16,3 +16,4 @@ def get_the_last_transaction():
                        'pos': -1,
                        'offset': -100})
     return requests.post(config.GET_ACTIONS, data).text
+
