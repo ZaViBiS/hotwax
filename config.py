@@ -14,6 +14,7 @@ OLD_USERS_FILE_NAME = 'data/old_users.json'
 USER_FILE_NAME = 'data/users.json'
 HASH_FILE_NAME = 'data/hash.json'
 LOG_FILE_NAME = 'data/log.txt'
+PRIZE_FUND = 'data/prize_fund.json'
 
 # --- Урлы --- #
 INFO_POST_ACCOUNT = 'https://wax.greymass.com/v1/chain/get_account'

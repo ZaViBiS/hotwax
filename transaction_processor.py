@@ -35,4 +35,5 @@ def tx_processor():
                                 for _ in range(10000):
                                     bet = random.randint(1, 10000)
                                     func.adding_rate(name, bet)
+                            
         time.sleep(360)
