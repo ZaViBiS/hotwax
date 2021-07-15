@@ -23,8 +23,7 @@ def start(message):
 
 @bot.message_handler(['test'])
 def test(message):
-    print('replace_false_with_trx_id')
-    func.replace_false_with_trx_id('ygbni.wam', '10', 'test')
+    func.clearing_bets_after_playing()
 
 
 @bot.message_handler(['hash'])

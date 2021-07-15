@@ -10,6 +10,7 @@ USER_EXIST = 'USER EXIST'
 
 # --- Штуки бота --- #
 OLD_HASHES_FILE_NAME = 'data/old_hashes.json'
+OLD_USERS_FILE_NAME = 'data/old_users.json'
 USER_FILE_NAME = 'data/users.json'
 HASH_FILE_NAME = 'data/hash.json'
 LOG_FILE_NAME = 'data/log.txt'

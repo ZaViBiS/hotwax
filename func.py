@@ -85,8 +85,14 @@ def json_reader(file_name):    # Чтение файла
 
 def clearing_bets_after_playing():    # Очищяет ставки после игры
     users = json_reader(config.USER_FILE_NAME)
+    # Сохранить данные
+    data = json_reader(config.OLD_USERS_FILE_NAME)
+    data[time.time()] = users
+    json_writer(data, config.OLD_USERS_FILE_NAME)
+
     for x in users:
         users[x]['bets'].clear()
+
     json_writer(users, config.USER_FILE_NAME)
 
 

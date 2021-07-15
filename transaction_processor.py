@@ -23,17 +23,16 @@ def tx_processor():
                         if name != 'ygbni.wam':
                             # Добавить пользователя если его нет
                             func.add_new_user(name, random.random())
-                            
+
                             # Если в memo есть ставка
                             if func.if_text_is_a_number(memo) == True:
                                 func.adding_rate(name, memo)
-                                func.replace_false_with_trx_id(name, memo, tranx)
+                                func.replace_false_with_trx_id(
+                                    name, memo, tranx)
                             elif func.to_the_first_bet_that_comes_across(name, tranx):
                                 pass
                             else:
                                 for _ in range(10000):
                                     bet = random.randint(1, 10000)
                                     func.adding_rate(name, bet)
-
-        print('end')
-        time.sleep(10)
+        time.sleep(360)
