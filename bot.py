@@ -20,7 +20,8 @@ def start(message):
 
 @bot.message_handler(['test'])
 def test(message):
-    func.hash_update()
+    print('replace_false_with_trx_id')
+    func.replace_false_with_trx_id('ygbni.wam', '10', 'test')
 
 
 @bot.message_handler(['hash'])

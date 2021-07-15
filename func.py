@@ -23,7 +23,7 @@ def add_new_user(user_wallet, user_id):    # Добовляет нового п�
         return False
     if check_the_user_for_availability(user_wallet, users):
         users[user_wallet] = {'memo': memo,
-                              'bets': [],
+                              'bets': {},
                               'telegram_id': user_id}
         json_writer(users, config.USER_FILE_NAME)
 
@@ -93,11 +93,10 @@ def clearing_bets_after_playing():    # Очищяет ставки после �
 def adding_rate(user_name, bet):    # Добовляет ставку (пользователю)
     users = json_reader(config.USER_FILE_NAME)
     for listt in users[user_name]['bets']:
-        for dictt in listt:
-            if dictt == str(bet):
-                return False
+        if listt == str(bet):
+            return False
     else:
-        users[user_name]['bets'].append({bet: False})
+        users[user_name]['bets'][bet] = False
         json_writer(users, config.USER_FILE_NAME)
         return True
 
@@ -161,3 +160,21 @@ def сheck_trx_id_for_presence_in_the_database(tx):
 
 def view_memo(data):
     return data['action_trace']['act']['data']['memo']
+
+
+def replace_false_with_trx_id(user_name : str, bet : str, tx : str):
+    users = json_reader(config.USER_FILE_NAME)
+    try:    # Заменить false на trx_id
+        if users[user_name]['bets'][bet] == False:
+            users[user_name]['bets'][bet] = tx
+        else:
+            return False
+    except:     # Добавить ставку
+        users[user_name]['bets'][bet] = tx
+        '''for x in users[user_name]['bets']:
+            if x == bet:
+                if users[user_name]['bets'][x] == False:
+                    users[user_name]['bets'][x] = tx
+                else:
+                    return False'''
+    json_writer(users, config.USER_FILE_NAME)
