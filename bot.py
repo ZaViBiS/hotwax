@@ -30,7 +30,7 @@ def test(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def click_handler(call):
-    if call.data == config.ADD_USER:
+    if call.data == config.ADD_USER:    # Добавить пользователя
         if func.check_for_existence(call.message.text):
             if func.add_new_user(call.message.text, call.message.chat.id) == False:
                 bot.send_message(call.message.chat.id, config.USER_EXIST)
@@ -39,15 +39,22 @@ def click_handler(call):
                                  config.SUCCESSFUL_REGISTRATION)
         else:
             bot.send_message(call.message.chat.id, config.NO_ACCOUNT)
+    elif call.data == config.BET:   # Ставка
+        user_name = func.get_name_by_id(call.message.chat.id)
+        func.adding_rate(user_name, call.message.text)
 
 
 @bot.message_handler(content_types=['text'])
 def processing_text_responses(message):
-    # func.if_text_is_a_number(message.text)
-    if False:
-        pass
+    if func.if_text_is_a_number(message.text) == True:  # Сообщение это ставка
+        bot.send_message(message.chat.id,
+                         message.text,
+                         reply_markup=func.keyboard_configur(config.BET))
 
-    else:
+    elif func.if_text_is_a_number(message.text) == config.SPAN_OF_NUMBERS:    # Сообщение это ставка с неправильным промежутком
+        bot.send_message(message.chat.id, config.SPAN_OF_NUMBERS)
+
+    else:   # Пользователь
         bot.send_message(message.chat.id,
                          message.text,
                          reply_markup=func.keyboard_configur(config.ADD_USER))

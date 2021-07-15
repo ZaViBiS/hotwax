@@ -1,6 +1,8 @@
 # --- То что видет пользователь --- #
 START_TEXT = 'text'
 ADD_USER = 'add'
+BET = 'bet'
+SPAN_OF_NUMBERS = 'mnogo'
 SUCCESSFUL_REGISTRATION = 'SUCCESSFUL REGISTRATION'
 FALSE_COMMAND = 'FALSE COMMAND'
 NO_ACCOUNT = 'no account'
@@ -14,3 +16,4 @@ LOG_FILE_NAME = 'data/log.txt'
 
 # --- Урлы --- #
 INFO_POST_ACCOUNT = 'https://wax.greymass.com/v1/chain/get_account'
+GET_ACTIONS = 'https://wax.greymass.com/v1/history/get_actions'

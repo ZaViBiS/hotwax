@@ -5,18 +5,19 @@ import time
 import random
 import hashlib
 
+import chain
 import config
 import keyboa
-import requests
 
 
-def creates_a_hash_of_the_winning_number(num):
+
+def creates_a_hash_of_the_winning_number(num):    # Создает хеш
     salt = os.urandom(64).hex()
     data = f'{num} {salt}'
     return hashlib.sha256(data.encode()).hexdigest(), salt, num
 
 
-def add_new_user(user_wallet, user_id):
+def add_new_user(user_wallet, user_id):    # Добовляет нового пользователя
     memo = get_new_memo()
     users = json_reader(config.USER_FILE_NAME)
     if check_for_telegram_id(user_id, users):
@@ -37,13 +38,13 @@ def check_the_user_for_availability(name, users):
         return True
 
 
-def check_for_telegram_id(telegram_id, users):
+def check_for_telegram_id(telegram_id, users):    # Есть ли такой telegram id
     for x in users.values():
         if x['telegram_id'] == telegram_id:
             return True
 
 
-def get_new_memo():
+def get_new_memo():    # Генерирует новое и уникальное memo
     while True:
         memo = os.urandom(4).hex()
         if checking_memo_for_uniqueness(memo):
@@ -51,9 +52,11 @@ def get_new_memo():
     return memo
 
 
-def if_text_is_a_number(text):
+def if_text_is_a_number(text):    # Сообщение это число или нет
     try:
-        if 0 > int(text) <= 10000:
+        if int(text) > 10000 or int(text) < 0:
+            return config.SPAN_OF_NUMBERS
+        if 0 < int(text) <= 10000:
             return True
         else:
             return False
@@ -61,7 +64,7 @@ def if_text_is_a_number(text):
         return False
 
 
-def checking_memo_for_uniqueness(memo):
+def checking_memo_for_uniqueness(memo):    # Проверяет memo на уникальность
     previous = json_reader(config.USER_FILE_NAME)
     for x in previous.values():
         if x['memo'] == memo:
@@ -81,14 +84,14 @@ def json_reader(file_name):    # Чтение файла
     return data
 
 
-def clearing_bets_after_playing():
+def clearing_bets_after_playing():    # Очищяет ставки после игры
     users = json_reader(config.USER_FILE_NAME)
     for x in users:
         users[x]['bets'].clear()
     json_writer(users, config.USER_FILE_NAME)
 
 
-def adding_rate(user_name, bet):
+def adding_rate(user_name, bet):    # Добовляет ставку (пользователю)
     users = json_reader(config.USER_FILE_NAME)
     for listt in users[user_name]['bets']:
         for dictt in listt:
@@ -100,45 +103,36 @@ def adding_rate(user_name, bet):
         return True
 
 
-def get_name_by_id(telegram_id):
+def get_name_by_id(telegram_id):    # Найти имя пользователя по id telegram
     users = json_reader(config.USER_FILE_NAME)
     for x in users:
         if users[x]['telegram_id'] == telegram_id:
             return x
 
 
-# Получает информацию про аккаунт
-def account_info(account):
-    data = json.dumps({'account_name': account})
-    respone = requests.post(config.INFO_POST_ACCOUNT, data=data).text
-    return json.loads(respone)
-
-
-def check_for_existence(account):
+def check_for_existence(account):    # Проверка аккаунта на существования
     try:
-        account_info(account)['account_name']
+        chain.account_info(account)['account_name']
         return True
     except:
         return False
 
 
-def get_hash():
+def get_hash():    # Возаращяет хеш
     return json_reader(config.HASH_FILE_NAME)['hash']
 
 
-# (list)
-def keyboard_configur(*args):
+def keyboard_configur(*args):    # (list)
     return keyboa.Keyboa(args[0]).keyboard
 
 
-# Обновления хеша
-def hash_update():
+def hash_update():    # Обновления хеша
     ran = random.randint(1, 10000)
     hashh, salt, num = creates_a_hash_of_the_winning_number(ran)
     # Сохранить старые хеши
     old = json_reader(config.OLD_HASHES_FILE_NAME)
     old[time.time()] = json_reader(config.HASH_FILE_NAME)
     json_writer(old, config.OLD_HASHES_FILE_NAME)
-    # Записать новыйе значения 
-    data = {"num" : num, "salt" : salt, "hash" : hashh}
+    # Записать новыйе значения
+    data = {"num": num, "salt": salt, "hash": hashh}
     json_writer(data, config.HASH_FILE_NAME)
