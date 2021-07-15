@@ -6,10 +6,12 @@ import func
 import config
 
 from telebot import TeleBot
+from transaction_processor import tx_processor
 
-
+# init
 bot = TeleBot(person_data.TOKEN)
-logging.basicConfig(level=logging.INFO,
+threading.Thread(target=tx_processor).start()
+logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s:%(message)s',
                     filename=config.LOG_FILE_NAME)
 
@@ -29,7 +31,7 @@ def test(message):
 def test(message):
     bot.send_message(message.chat.id, func.get_hash())
 
-
+# Кнопки
 @bot.callback_query_handler(func=lambda call: True)
 def click_handler(call):
     if call.data == config.ADD_USER:    # Добавить пользователя
@@ -45,7 +47,7 @@ def click_handler(call):
         user_name = func.get_name_by_id(call.message.chat.id)
         func.adding_rate(user_name, call.message.text)
 
-
+# Текст
 @bot.message_handler(content_types=['text'])
 def processing_text_responses(message):
     if func.if_text_is_a_number(message.text) == True:  # Сообщение это ставка

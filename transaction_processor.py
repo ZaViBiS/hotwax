@@ -17,20 +17,23 @@ def tx_processor():
                 tranx = func.get_tx(txs)
 
                 if сheck_trx(tranx) == False:
-                    if chain.get_transaction_amount_by_trx_id(tranx) == '0.01 WAX':
+                    if chain.get_transaction_amount_by_trx_id(tranx, tx) == '0.01000000 WAX':
                         memo = func.get_memo(txs)
-                        user_name = func.get_user_name(txs)
-                        # Добавить пользователя если его нет
-                        func.add_new_user(user_name, random.random())
+                        name = func.get_user_name(txs)
+                        if name != 'ygbni.wam':
+                            # Добавить пользователя если его нет
+                            func.add_new_user(name, random.random())
+                            
+                            # Если в memo есть ставка
+                            if func.if_text_is_a_number(memo) == True:
+                                func.adding_rate(name, memo)
+                                func.replace_false_with_trx_id(name, memo, tranx)
+                            elif func.to_the_first_bet_that_comes_across(name, tranx):
+                                pass
+                            else:
+                                for _ in range(10000):
+                                    bet = random.randint(1, 10000)
+                                    func.adding_rate(name, bet)
 
-                        # Если в memo есть ставка
-                        if func.if_text_is_a_number(memo) == True:
-                            func.adding_rate(user_name, memo)
-                        elif func.to_the_first_bet_that_comes_across(user_name, tranx):
-                            pass
-                        else:
-                            for _ in range(10000):
-                                bet = random.randint(1, 10000)
-                                func.adding_rate(user_name, bet)
-
+        print('end')
         time.sleep(10)

@@ -21,8 +21,8 @@ def get_the_last_transaction():     # Получить 100 последних т
 
 
 # Получить сумму транзакции по trx_id
-def get_transaction_amount_by_trx_id(trx):
-    for x in get_the_last_transaction()['actions']:
+def get_transaction_amount_by_trx_id(trx, tx):
+    for x in tx['actions']:
         try:
             if func.get_tx(x) == trx:
                 return func.get_quantity(x)

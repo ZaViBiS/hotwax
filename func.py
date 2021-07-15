@@ -142,7 +142,7 @@ def find_all_transactions_with_a_user(user, txs):
     for x in txs['actions']:
         data = x['action_trace']['act']['authorization'][0]['actor']
         if data == user:
-            result.append(x['action_trace'])
+            result.append(x)
     return result
 
 
