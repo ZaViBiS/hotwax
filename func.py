@@ -146,3 +146,14 @@ def find_all_transactions_with_a_user(user, txs):
         if data == user:
             result.append(x['action_trace'])
     return result
+
+
+# Проверить trx_id на наличие в базе
+def сheck_trx_id_for_presence_in_the_database(tx):
+    users = json_reader(config.USER_FILE_NAME)
+    for x in users.values():
+        for us_tx in x['bets']:
+            if list(us_tx.values())[0] == tx:
+                return True
+    else:
+        return False
