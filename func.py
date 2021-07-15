@@ -51,7 +51,7 @@ def get_new_memo():    # Генерирует новое и уникальное
     return memo
 
 
-def if_text_is_a_number(text):    # Сообщение это число или нет
+def if_text_is_a_number(text: str):    # Сообщение это число или нет
     try:
         if int(text) > 10000 or int(text) < 0:
             return config.SPAN_OF_NUMBERS
@@ -157,7 +157,7 @@ def сheck_trx_id_for_presence_in_the_database(tx):
         return False
 
 
-def view_memo(data):
+def get_memo(data):
     return data['action_trace']['act']['data']['memo']
 
 
@@ -167,6 +167,10 @@ def get_tx(data):
 
 def get_quantity(data):
     return data['action_trace']['act']['data']['quantity']
+
+
+def get_user_name(data):
+    return data['action_trace']['act']['data']['from']
 
 
 # Заменить false на trx_id
@@ -186,3 +190,14 @@ def replace_false_with_trx_id(user_name: str, bet: str, tx: str):
                 else:
                     return False'''
     json_writer(users, config.USER_FILE_NAME)
+
+
+# Присваивать deposit к первой попавшейся ставки
+def to_the_first_bet_that_comes_across(user_name, tx):
+    users = json_reader(config.USER_FILE_NAME)
+    for bet in users[user_name]['bets']:
+        if users[user_name]['bets'][bet] == False:
+            users[user_name]['bets'][bet] = tx
+            return True
+    else:
+        return False
