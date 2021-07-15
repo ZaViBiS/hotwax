@@ -1,4 +1,5 @@
 __pycache__
 test.py
 person_data.py
-data
+data/
+.vscode

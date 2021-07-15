@@ -136,9 +136,8 @@ def hash_update():    # Обновления хеша
     json_writer(data, config.HASH_FILE_NAME)
 
 
-# Ищет транзакции с определенным пользователям
+# Найти все транзакции с пользователем N
 def find_all_transactions_with_a_user(user, txs):
-    txs = json.loads(txs)
     result = []
     for x in txs['actions']:
         data = x['action_trace']['act']['authorization'][0]['actor']
@@ -152,7 +151,7 @@ def сheck_trx_id_for_presence_in_the_database(tx):
     users = json_reader(config.USER_FILE_NAME)
     for x in users.values():
         for us_tx in x['bets']:
-            if list(us_tx.values())[0] == tx:
+            if x['bets'][us_tx] == tx:
                 return True
     else:
         return False
@@ -162,7 +161,16 @@ def view_memo(data):
     return data['action_trace']['act']['data']['memo']
 
 
-def replace_false_with_trx_id(user_name : str, bet : str, tx : str):
+def get_tx(data):
+    return data['action_trace']['trx_id']
+
+
+def get_quantity(data):
+    return data['action_trace']['act']['data']['quantity']
+
+
+# Заменить false на trx_id
+def replace_false_with_trx_id(user_name: str, bet: str, tx: str):
     users = json_reader(config.USER_FILE_NAME)
     try:    # Заменить false на trx_id
         if users[user_name]['bets'][bet] == False:

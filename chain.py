@@ -1,6 +1,7 @@
 # --- Тут функции которые работают с данныеми блокчейна  --- #
 import json
 
+import func
 import config
 import requests
 
@@ -18,3 +19,12 @@ def get_the_last_transaction():     # Получить 100 последних т
     res = requests.post(config.GET_ACTIONS, data).text
     return json.loads(res)
 
+
+# Получить сумму транзакции по trx_id
+def get_transaction_amount_by_trx_id(trx):
+    for x in get_the_last_transaction()['actions']:
+        try:
+            if func.get_tx(x) == trx:
+                return func.get_quantity(x)
+        except:
+            pass
